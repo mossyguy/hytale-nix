@@ -1,15 +1,21 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { self, flake-parts, ...} @inputs: flake-parts.lib.mkFlake { inherit inputs; } {
-    systems = [ "x86_64-linux" ];
-
-    perSystem = { pkgs, lib, system, ... }: let
-      version = "2026.04.28-d3d25ae";
-      sha256 = "sha256-fu9sp+hOi5t/wsQaSPAfzinLUrpdg5e2+b4S+nvzAgE=";
+  outputs = {
+    nixpkgs,
+    utils,
+    self,
+    ...
+  }: utils.lib.eachSystem [ "x86_64-linux" ] (system: let
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+      version = "2026.06.30-test";
+      sha256 = "sha256-abcdefghijklmnopqrstuvwxyz1234567890abcdefg=";
       url = "https://launcher.hytale.com/builds/release/linux/amd64/hytale-launcher-${version}.zip";
       src = pkgs.fetchzip {
         inherit url sha256;
@@ -25,9 +31,7 @@
       };
       apps.default = {
         type = "app";
-        program = "${lib.getExe self.packages.${system}.hytale-launcher}";
+        program = "${pkgs.lib.getExe self.packages.${system}.hytale-launcher}";
       };
-    };
-  };
+  });
 }
-
