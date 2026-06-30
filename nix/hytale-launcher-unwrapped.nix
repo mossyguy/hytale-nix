@@ -49,6 +49,11 @@
     libXrandr
   ];
 
+  unpackPhase = ''
+    runHook preUnpack
+    unzip $src -d .
+    runHook postUnpack
+  '';
   dontBuild = true;
 
   installPhase = ''
