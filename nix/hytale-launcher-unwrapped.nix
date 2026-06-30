@@ -20,11 +20,12 @@
   libXext,
   libXfixes,
   libXrandr,
-  unzip
+  unzip.
+  fetchurl
 }: stdenv.mkDerivation {
   pname = "hytale-launcher-unwrapped";
   inherit version;      
-  src = pkgs.fetchurl {
+  src = fetchurl {
     inherit sha256;
     url = "https://launcher.hytale.com/builds/release/linux/amd64/hytale-launcher-${version}.zip";
   };
