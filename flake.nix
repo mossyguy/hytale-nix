@@ -14,7 +14,7 @@
         inherit system;
         config.allowUnfree = true;
       };
-      version = "2026.06.24-5dbd7e9";
+      version = "2026.06.24-5012345";
       sha256 = "sha256-gEwcRoEz4Td6WaI2tZG1UsJzRCcBJCJf1J0Eeg4Uwgk=";
     in {
       packages = rec {
