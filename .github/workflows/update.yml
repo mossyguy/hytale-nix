@@ -35,8 +35,8 @@ jobs:
           HEX_HASH=$(echo "$MANIFEST" | jq -r '.linux.amd64.sha256')
           LATEST_HASH=$(nix hash convert --hash-algo sha256 --to sri "sha256:$HEX_HASH")
 
-          sd 'version\s*=\s*".*";' "version = \"$LATEST_VERSION\";" flake.nix
-          sd 'sha256\s*=\s*".*";' "sha256 = \"$LATEST_HASH\";" flake.nix
+          sd 'version\s*=\s*"[^"]*";' "version = \"$LATEST_VERSION\";" flake.nix
+          sd 'sha256\s*=\s*"[^"]*";' "sha256 = \"$LATEST_HASH\";" flake.nix
 
           nix build .#hytale-launcher --no-link
           nix flake update
