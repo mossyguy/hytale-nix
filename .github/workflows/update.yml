@@ -10,18 +10,12 @@ jobs:
   check-and-update:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+      - uses: DeterminateSystems/nix-installer-action@main  
+      - run: nix profile add nixpkgs#{sd,jq,curl}
 
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
-      
-      - name: Install Dependencies Globally
-        run: nix profile add nixpkgs#{sd,jq,curl}
-
-      - name: Check, Update, and Build
-        run: |
-          set -euxo pipefail
+      - run: |
+          set -euo pipefail
 
           CURRENT_VERSION=$(nix eval --json .#packages.x86_64-linux.hytale-launcher.version | jq -r '.')
           MANIFEST=$(curl -sA "Mozilla/5.0" "https://launcher.hytale.com/version/release/launcher.json")
@@ -35,19 +29,14 @@ jobs:
           HEX_HASH=$(echo "$MANIFEST" | jq -r '.download_url.linux.amd64.sha256')
           LATEST_HASH=$(nix hash convert --hash-algo sha256 --to sri "sha256:$HEX_HASH")
 
-          echo $CURRENT_VERSION
-          echo $MANIFEST
-          echo $HEX_HASh
-          echo $LATEST_HASH
-
           sd 'version\s*=\s*"[^"]*";' 'version = "'"$LATEST_VERSION"'";' flake.nix
           sd 'sha256\s*=\s*"[^"]*";' 'sha256 = "'"$LATEST_HASH"'";' flake.nix
 
           nix build .#hytale-launcher --no-link
           nix flake update
 
-      - name: Commit and Push Directly
-        run: |
+
+      - run: |
           if [ -n "$(git status --porcelain)" ]; then
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
