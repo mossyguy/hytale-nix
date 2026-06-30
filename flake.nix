@@ -17,7 +17,7 @@
       version = "2026.06.24-5dbd7e9";
       sha256 = "sha256-gEwcRoEz4Td6WaI2tZG1UsJzRCcBJCJf1J0Eeg4Uwgk=";
       url = "https://launcher.hytale.com/builds/release/linux/amd64/hytale-launcher-${version}.zip";
-      src = pkgs.fetchzip {
+      src = pkgs.fetchurl {
         inherit url sha256;
       };
     in {
