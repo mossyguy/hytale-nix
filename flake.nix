@@ -14,8 +14,8 @@
         inherit system;
         config.allowUnfree = true;
       };
-      version = "2026.06.24-5012345";
-      sha256 = "sha256-gEwcRoEz4Td6WaI2tZG1UsJzRCcBJCJf1J0Eeg4Uwgk=";
+      version = "2026.06.24-5dbd7e9";
+      sha256 = "sha256-XBmIBdA65iv7WWa6C/K3pU6wRKkEMUGe9MFPXjqz3nk=";
     in {
       packages = rec {
         hytale-launcher-unwrapped = (pkgs.callPackage ./nix/hytale-launcher-unwrapped.nix {
