@@ -21,7 +21,7 @@ jobs:
 
       - name: Check, Update, and Build
         run: |
-          set -euo pipefail
+          set -euxo pipefail
 
           CURRENT_VERSION=$(nix eval --json .#packages.x86_64-linux.hytale-launcher.version | jq -r '.')
           MANIFEST=$(curl -sA "Mozilla/5.0" "https://launcher.hytale.com/version/release/launcher.json")
