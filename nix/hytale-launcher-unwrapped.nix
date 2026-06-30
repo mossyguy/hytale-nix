@@ -20,7 +20,7 @@
   libXext,
   libXfixes,
   libXrandr,
-  unzip.
+  unzip,
   fetchurl
 }: stdenv.mkDerivation {
   pname = "hytale-launcher-unwrapped";
