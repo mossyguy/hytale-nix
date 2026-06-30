@@ -15,7 +15,7 @@
         config.allowUnfree = true;
       };
       version = "2026.06.24-5dbd7e9";
-
+      sha256 = "sha256-gEwcRoEz4Td6WaI2tZG1UsJzRCcBJCJf1J0Eeg4Uwgk=";
     in {
       packages = rec {
         hytale-launcher-unwrapped = (pkgs.callPackage ./nix/hytale-launcher-unwrapped.nix {

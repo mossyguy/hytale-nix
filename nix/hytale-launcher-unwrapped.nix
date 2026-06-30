@@ -2,7 +2,7 @@
   stdenv,
   lib,
   version,
-  src,  
+  sha256,  
   autoPatchelfHook,
   webkitgtk_4_1,
   gtk3,
@@ -25,7 +25,7 @@
   pname = "hytale-launcher-unwrapped";
   inherit version;      
   src = pkgs.fetchurl {
-    sha256 = "sha256-gEwcRoEz4Td6WaI2tZG1UsJzRCcBJCJf1J0Eeg4Uwgk=";
+    inherit sha256;
     url = "https://launcher.hytale.com/builds/release/linux/amd64/hytale-launcher-${version}.zip";
   };
 
