@@ -8,8 +8,8 @@
     systems = [ "x86_64-linux" ];
 
     perSystem = { pkgs, lib, system, ... }: let
-      version = "2026.06.24-5dbd7e9";
-      sha256 = "sha256-qHGRkezRqrSOoq6xei+0AEWkzLY/O0P2OFvQG7SCPTw=";
+      version = "2026.04.28-d3d25ae";
+      sha256 = "sha256-fu9sp+hOi5t/wsQaSPAfzinLUrpdg5e2+b4S+nvzAgE=";
       url = "https://launcher.hytale.com/builds/release/linux/amd64/hytale-launcher-${version}.zip";
       src = pkgs.fetchzip {
         inherit url sha256;
