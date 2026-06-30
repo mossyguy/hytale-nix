@@ -32,7 +32,7 @@ jobs:
             exit 0
           fi
 
-          HEX_HASH=$(echo "$MANIFEST" | jq -r '.linux.amd64.sha256')
+          HEX_HASH=$(echo "$MANIFEST" | jq -r '.download_url.linux.amd64.sha256')
           LATEST_HASH=$(nix hash convert --hash-algo sha256 --to sri "sha256:$HEX_HASH")
 
           echo $CURRENT_VERSION
