@@ -19,7 +19,7 @@
     in {
       packages = rec {
         hytale-launcher-unwrapped = (pkgs.callPackage ./nix/hytale-launcher-unwrapped.nix {
-          inherit version;
+          inherit version sha256;
         });
         hytale-launcher = (pkgs.callPackage ./nix/hytale-launcher.nix {
           inherit version hytale-launcher-unwrapped;
