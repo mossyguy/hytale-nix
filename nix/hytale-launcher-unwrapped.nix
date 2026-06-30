@@ -20,11 +20,12 @@
   libXext,
   libXfixes,
   libXrandr,
+  unzip
 }: stdenv.mkDerivation {
   pname = "hytale-launcher-unwrapped";
   inherit version src;
 
-  nativeBuildInputs = [ autoPatchelfHook ];
+  nativeBuildInputs = [ autoPatchelfHook unzip ];
 
   buildInputs = [
     webkitgtk_4_1
