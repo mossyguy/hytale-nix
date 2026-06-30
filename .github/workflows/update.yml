@@ -14,6 +14,7 @@ jobs:
       - uses: DeterminateSystems/nix-installer-action@main  
       - run: nix profile add nixpkgs#{sd,jq,curl}
 
+
       - run: |
           set -euo pipefail
 
@@ -26,15 +27,14 @@ jobs:
             exit 0
           fi
 
-          HEX_HASH=$(echo "$MANIFEST" | jq -r '.download_url.linux.amd64.sha256')
-          LATEST_HASH=$(nix hash convert --hash-algo sha256 --to sri "sha256:$HEX_HASH")
+          DOWNLOAD_URL=$(echo "$MANIFEST" | jq -r '.download_url.linux.amd64.url')
+          LATEST_HASH=$(nix-prefetch-url --unpack "$DOWNLOAD_URL" --type sha256 --output sri)
 
           sd 'version\s*=\s*"[^"]*";' 'version = "'"$LATEST_VERSION"'";' flake.nix
           sd 'sha256\s*=\s*"[^"]*";' 'sha256 = "'"$LATEST_HASH"'";' flake.nix
-
-          nix build .#hytale-launcher --no-link
+          
           nix flake update
-
+          
 
       - run: |
           if [ -n "$(git status --porcelain)" ]; then
