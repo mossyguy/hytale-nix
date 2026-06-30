@@ -23,7 +23,11 @@
   unzip
 }: stdenv.mkDerivation {
   pname = "hytale-launcher-unwrapped";
-  inherit version src;
+  inherit version;      
+  src = pkgs.fetchurl {
+    sha256 = "sha256-gEwcRoEz4Td6WaI2tZG1UsJzRCcBJCJf1J0Eeg4Uwgk=";
+    url = "https://launcher.hytale.com/builds/release/linux/amd64/hytale-launcher-${version}.zip";
+  };
 
   nativeBuildInputs = [ autoPatchelfHook unzip ];
 

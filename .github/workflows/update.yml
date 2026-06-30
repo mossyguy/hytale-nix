@@ -22,15 +22,13 @@ jobs:
           MANIFEST=$(curl -sA "Mozilla/5.0" "https://launcher.hytale.com/version/release/launcher.json")
           
           LATEST_VERSION=$(echo "$MANIFEST" | jq -r '.version')
-          if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then
-            exit 0
-          fi
+          if [ "$CURRENT_VERSION" != "$LATEST_VERSION" ]; then
+            HEX_HASH=$(echo "$MANIFEST" | jq -r '.download_url.linux.amd64.sha256')
+            LATEST_HASH=$(nix hash convert --hash-algo sha256 --to sri "$HEX_HASH")
 
-          DOWNLOAD_URL=$(echo "$MANIFEST" | jq -r '.download_url.linux.amd64.url')
-          LATEST_HASH=$(nix store prefetch-file --json --unpack "$DOWNLOAD_URL" | jq -r '.hash')
-
-          sd 'version\s*=\s*"[^"]*";' 'version = "'"$LATEST_VERSION"'";' flake.nix
-          sd 'sha256\s*=\s*"[^"]*";' 'sha256 = "'"$LATEST_HASH"'";' flake.nix
+            sd 'version\s*=\s*"[^"]*";' 'version = "'"$LATEST_VERSION"'";' flake.nix
+            sd 'sha256\s*=\s*"[^"]*";' 'sha256 = "'"$LATEST_HASH"'";' flake.nix
+          fi    
             
       - run: |
           if [ -n "$(git status --porcelain)" ]; then
