@@ -58,8 +58,8 @@
   meta = with lib; {
     description = "Official launcher for Hytale game (unwrapped)";
     homepage = "https://hytale.com";
-    license = licenses.unfree;
-    sourceProvenance = sourceTypes.binaryNativeCode;
+    license = [ licenses.unfree ];
+    sourceProvenance = [ sourceTypes.binaryNativeCode ];
     platforms = [ "x86_64-linux" ];
   };
 }

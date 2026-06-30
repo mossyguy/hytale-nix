@@ -153,8 +153,8 @@
       providing FHS compatibility for self-updates.
     '';
     homepage = "https://hytale.com";
-    license = licenses.unfree;
-    sourceProvenance = sourceTypes.binaryNativeCode;
+    license = [ licenses.unfree ];
+    sourceProvenance = [ sourceTypes.binaryNativeCode ];
     platforms = [ "x86_64-linux" ];
     mainProgram = "hytale-launcher";
   };
